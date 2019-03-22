@@ -1,0 +1,22 @@
+
+.container {
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    padding: 15px;
+    
+    width: 65%;
+ }
+ #display{
+     background-color: navy;
+     color: white;
+ }
+ 
+ thead{
+     padding: 20px;
+     width:100%;
+ }
+ 
+ th{
+     margin-right: 50px;
+ }
