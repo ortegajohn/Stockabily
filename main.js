@@ -130,3 +130,73 @@ $(document).on("click",".button", function(e) {
 
   //news 
   //https://api.iextrading.com/1.0/stock/aapl/batch?types=quote,news,chart&range=1m&last=10
+
+  function stockinfo(symbol){
+
+    $.ajax({
+      url: "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+symbol+"&apikey=MVG2GAAJUF1WORNH",
+      method: "GET"
+    }).then(function(response) {
+      console.log(response)
+
+      var time_series =[];
+      for(i in response["Time Series (Daily)"]){
+        time_series.push(i)
+      }
+      a  = time_series[0].replace(/^\s+/,"")    
+       var openPrice = response["Time Series (Daily)"][a]["1. open"]
+      console.log(price);
+      
+      b = time_series[1].replace(/^\s+/,"")
+      var highPrice = response["Time Series (Daily)"][b]["2. high"]
+     
+      c= time_series[2].replace(/^\s+/,"")
+      var lowPrice = response["Time Series (Daily)"][c]["3. low"]
+
+      d = time_series[3].replace(/^\s+/,"")
+      var lowPrice = response["Time Series (Daily)"][d]["4. close"]
+
+
+    var symbol = $(".input").val();
+    var symbolName = $("<div>");
+    var p1 = $("<p>");
+    p1.text("Symbol:  " + symbol);
+    p1.addClass("para1")
+
+    var open = $("<div>");
+    var p2 = $("<p>");
+   p2.text("price: " + openPrice )
+   p2.addClass("para2")
+
+    var high = $("<div>")
+    var p3 = $("<p>");
+    p3.text("High Price:  " + highPrice);
+    p3.addClass("para3")
+
+    var low = $("<div>");
+    var p4 = $("<p>");
+    p4.text("low price " + lowPrice);
+    p4.addClass("para4")
+
+    var close = 
+
+    
+    symbolName.append(p1)
+    open.append(p2)
+    high.append(p3)
+    low.append(p4)
+    $("#stockcontent").append(symbolName)
+    $("#stockcontent").append(open)
+    $("#stockcontent").append(high)
+    $("#stockcontent").append(low)
+    
+    });
+  };
+  
+    
+  $(document).on("click","#stockdetails", function(e) {
+    var symbol = $(".input").val()
+    event.preventDefault();
+    stockinfo(symbol);
+    
+  })
