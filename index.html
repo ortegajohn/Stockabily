@@ -7,8 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Stockabily</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="css/style.css" rel="stylesheet">
 
 </head>
@@ -45,24 +44,42 @@
             </div>
         </nav>
     </div>
-    <div class="container">
+    <div class="container" id="info">
         <p> Favorite List</p>
         <table class="table table is-fullwidth">
-            <thead>
+            <thead id="table">
                 <tr>
-                    <th scope="col"> Symbol</th>
+                    <th scope="col">Symbol</th>
                     <th scope="col">Company Name</th>
-                    <th scope="col"> Stock Price</th>
-                    <th scope="col"> Market Cap</th>
-
+                    <th scope="col">Stock Price</th>
+                    <th scope="col">Market Cap</th>
                 </tr>
+
             </thead>
-            
+            <thead id="table_content">
+ 
+
+            </thead>
+
         </table>
     </div>
 
+    <div class="container ">
+        <div class="row " id ="stockdetails">
+        
+                <div class="columns is-mobile">
+                        <div class="column"> Stock Details</div>
+                        <div class="column"> Historical Charts</div>
+                        <div class="column">News Feed </div>                        
+                </div>
+
+        </div>
+   </div>
 
 
+
+
+   <script src="main.js"></script> 
 </body>
 
 </html>
