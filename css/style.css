@@ -28,3 +28,22 @@
     background-color: navy;
     color: white;
  }
+
+ .para{
+     font-size: 20px;
+     margin-left: 50px;
+     margin-top: 50px;
+     
+     font-weight: bold;
+
+ }
+ 
+ #stockcontent{
+     font-size: 20px;
+     line-height: 2.0;
+     
+     
+ }
+ .urlclass{
+     margin-bottom: 50px;
+ }
