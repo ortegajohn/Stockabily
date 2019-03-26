@@ -117,10 +117,14 @@ $(document).on("click", ".button", function (e) {
   }
 
 
-  set_symbol(ticker)
-  get_market_cap(ticker)
-  get_ticker_info(ticker)
-  get_ticker_company(ticker)
+  async function getStockData(ticker) {
+    await set_symbol(ticker)
+    await get_market_cap(ticker)
+    await get_ticker_info(ticker)
+    await get_ticker_company(ticker)
+  }
+
+  getStockData(ticker)
 
 
 
