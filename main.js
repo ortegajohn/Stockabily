@@ -31,6 +31,100 @@ var table_values = {
   market: "",
 }
 
+///https://www.tradingview.com/widget/advanced-chart/
+//Set chart
+new TradingView.widget(
+  {
+  "width": 980,
+  "height": 610,
+  "symbol": "NASDAQ:AAPL",
+  "interval": "D",
+  "timezone": "Etc/UTC",
+  "theme": "Light",
+  "style": "1",
+  "locale": "en",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "container_id": "tradingview_72e3c"
+}
+);
+
+// $(".tradingview-widget-container").hide()
+
+function get_index(ticker){
+
+  var index = "";
+  for(i=0;i<NASDAQ_tickers.length;i++){
+
+    if(i === ticker.toUpperCase()){
+      index = "NASDAQ";
+    }
+
+  }
+
+  for(i=0;i<NYSE_tickers.length;i++){
+
+    if(i === ticker.toUpperCase()){
+      index = "NYSE";
+    }
+
+  }
+
+  for(i=0;i<AMEX_tickers.length;i++){
+
+    if(i === ticker.toUpperCase()){
+      index = "AMEX";
+    }
+
+  }
+console.log("index: ",index)
+return index
+
+}
+
+
+function update_chart(ticker){
+
+  //"https://www.tradingview.com/symbols/NYSE-MMM/"
+  // $("#web_chart").attr("href","https://www.tradingview.com/symbols/NYSE-MMM/")
+  // TradingView.widget["symbol"] = "NYSE:​MMM"
+  new TradingView.widget(
+  //   {
+  //   "width": 980,
+  //   "height": 610,
+  //   "symbol": "NYSE:​MMM",
+  //   "interval": "D",
+  //   "timezone": "Etc/UTC",
+  //   "theme": "Light",
+  //   "style": "1",
+  //   "locale": "en",
+  //   "toolbar_bg": "#f1f3f6",
+  //   "enable_publishing": false,
+  //   "allow_symbol_change": true,
+  //   "container_id": "tradingview_72e3c"
+  // }
+  {
+    "width": 980,
+    "height": 610,
+    "symbol": get_index(ticker)+":"+ticker,
+    "interval": "D",
+    "timezone": "Etc/UTC",
+    "theme": "Light",
+    "style": "1",
+    "locale": "en",
+    "toolbar_bg": "#f1f3f6",
+    "enable_publishing": false,
+    "allow_symbol_change": true,
+    "container_id": "tradingview_72e3c"
+    // "container_id": "tradingview_845d6"
+  }
+  
+  );
+  
+}
+
+
 function table(ticker) {
   var symbol_table = $("<tr>")
 
@@ -126,12 +220,13 @@ $(document).on("click", ".button", function (e) {
 
   getStockData(ticker)
 
-
-
+  newsfeed(ticker)
+  stockinfo(ticker)
   console.log("table_values: ", table_values)
 
   $(".input").val("")
-
+  update_chart(ticker)
+  $(".tradingview-widget-container").show()
 });
 
 //news 
@@ -265,12 +360,12 @@ function newsfeed(symbol) {
   });
 }
 
-$(document).on("click", "#newsfeed", function () {
+// $(document).on("click", "#newsfeed", function () {
 
-  var symbol = $(".input").val();
-  //$("#stockcontent").empty();
-  newsfeed(symbol);
+//   var symbol = $(".input").val();
+//   //$("#stockcontent").empty();
+//   newsfeed(symbol);
 
 
-});
+// });
 

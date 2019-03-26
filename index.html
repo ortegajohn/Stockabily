@@ -57,43 +57,55 @@
 
             </thead>
             <thead id="table_content">
- 
+
 
             </thead>
 
         </table>
     </div>
 
-   
 
-   <div class="container " >
-    <div class="row " id="stockdetails">
 
-        <div class="columns is-mobile"  >
-            <div class="column" >
+    <div class="container ">
+        <div class="row " id="stockdetails">
+
+            <div class="columns is-mobile">
+                <div class="column">
                     <button id="stockinfo">
-                           Stock Detail
-                        </button>
-            </div>
-            <div class="column">
-                <button id="charts">
-                    Historical Charts
-                </button>
-            </div>
-            <div class="column">
-                <button id="newsfeed">News Feed </button>
-            </div>
+                        Stock Detail
+                    </button>
+                </div>
+                <div class="column">
+                    <button id="charts">
+                        Historical Charts
+                    </button>
+                </div>
+                <div class="column">
+                    <button id="newsfeed">News Feed </button>
+                </div>
 
+            </div>
         </div>
     </div>
-</div>
-<div class ="container" id ="stockcontent">
-    
-</div>
+    <div class="container" id="stockcontent">
+
+    </div>
+    <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+        <div id="tradingview_72e3c"></div>
+        <div class="tradingview-widget-copyright"><a id="web_chart"
+                href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span
+                    class="blue-text">AAPL chart</span></a> by TradingView</div>
+
+    </div>
 
 
-
-   <script src="main.js"></script> 
+    <!-- TradingView Widget END -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="main.js"></script>
+    <script src="AMEXstocksymbol.js"></script>
+    <script src="NASDAQstocksymbol.js"></script>
+    <script src="NYSEstocksymbol.js"></script>
 </body>
 
 </html>
