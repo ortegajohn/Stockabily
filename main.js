@@ -33,22 +33,22 @@ var table_values = {
 
 ///https://www.tradingview.com/widget/advanced-chart/
 //Set chart
-new TradingView.widget(
-  {
-  "width": 980,
-  "height": 610,
-  "symbol": "NASDAQ:AAPL",
-  "interval": "D",
-  "timezone": "Etc/UTC",
-  "theme": "Light",
-  "style": "1",
-  "locale": "en",
-  "toolbar_bg": "#f1f3f6",
-  "enable_publishing": false,
-  "allow_symbol_change": true,
-  "container_id": "tradingview_72e3c"
-}
-);
+// new TradingView.widget(
+//   {
+//   "width": 980,
+//   "height": 610,
+//   "symbol": "NASDAQ:AAPL",
+//   "interval": "D",
+//   "timezone": "Etc/UTC",
+//   "theme": "Light",
+//   "style": "1",
+//   "locale": "en",
+//   "toolbar_bg": "#f1f3f6",
+//   "enable_publishing": false,
+//   "allow_symbol_change": true,
+//   "container_id": "tradingview_72e3c"
+// }
+// );
 
 // $(".tradingview-widget-container").hide()
 
@@ -105,8 +105,8 @@ function update_chart(ticker){
   //   "container_id": "tradingview_72e3c"
   // }
   {
-    "width": 980,
-    "height": 610,
+    "width": 880,
+    "height": 510,
     "symbol": get_index(ticker)+":"+ticker,
     "interval": "D",
     "timezone": "Etc/UTC",
@@ -227,6 +227,8 @@ $(document).on("click", ".button", function (e) {
   $(".input").val("")
   update_chart(ticker)
   $(".tradingview-widget-container").show()
+
+  hide_news()
 });
 
 //news 
@@ -299,13 +301,22 @@ function stockinfo(symbol) {
     low.append(p4)
     close.append(p5)
     volume.append(p6)
-    $("#stockcontent").empty();
-    $("#stockcontent").append(symbolName)
-    $("#stockcontent").append(open)
-    $("#stockcontent").append(high)
-    $("#stockcontent").append(low)
-    $("#stockcontent").append(close)
-    $("#stockcontent").append(volume)
+    // $("#stockcontent").empty();
+    // $("#stockcontent").append(symbolName)
+    // $("#stockcontent").append(open)
+    // $("#stockcontent").append(high)
+    // $("#stockcontent").append(low)
+    // $("#stockcontent").append(close)
+    // $("#stockcontent").append(volume)
+
+
+    $("#stockinfo_id").empty();
+    $("#stockinfo_id").append(symbolName)
+    $("#stockinfo_id").append(open)
+    $("#stockinfo_id").append(high)
+    $("#stockinfo_id").append(low)
+    $("#stockinfo_id").append(close)
+    $("#stockinfo_id").append(volume)
   });
 };
 
@@ -354,11 +365,41 @@ function newsfeed(symbol) {
       newsDiv.append(newsPara)
       newsDiv.append(newsURL)
 
-      $("#stockcontent").append(newsDiv);
+      // $("#stockcontent").append(newsDiv);
+      $("#stocknews_id").append(newsDiv);
       
     }
   });
 }
+
+function hide_news(){
+  $("#stocknews_id").hide()
+}
+function show_news(){
+  $("#stocknews_id").show()
+}
+
+function hide_stockinfo(){
+  $("#stockinfo_id").hide()
+}
+
+function show_stockinfo(){
+  $("#stockinfo_id").show()
+}
+
+$(document).on("click", "#news_tab", function (e) {
+  $("#info_tab").removeClass()
+  $("#news_tab").addClass("is-active")
+  show_news()
+  hide_stockinfo()
+});
+
+$(document).on("click", "#info_tab", function (e) {
+  $("#info_tab").addClass("is-active")
+  $("#news_tab").removeClass()
+  hide_news()
+  show_stockinfo()
+});
 
 // $(document).on("click", "#newsfeed", function () {
 
