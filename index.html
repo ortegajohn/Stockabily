@@ -24,7 +24,9 @@
         </div>
         <input type="submit">
     </form> -->
-
+    <div class="hd">
+        <img src="images/Logo.jpg" alt="headerImg" width="100%">
+    </div>
 
     <div class="container " id="display">
         <p> Stock market search</p>
@@ -39,12 +41,12 @@
                 <div class="level-item">
                     <div class="field has-addons">
                         <p class="control">
-                                <form autocomplete="off" action="/action_page.php">
-                                    <div class="autocomplete" style="width:300px;">
-                                        <input class="input" id="myInput" type="text"placeholder="Search stock">
-                                    </div>
-                                    <!-- <input type="submit"> -->
-                                </form>
+                            <form autocomplete="off" action="/action_page.php">
+                                <div class="autocomplete" style="width:300px;">
+                                    <input class="input" id="myInput" type="text" placeholder="Search stock">
+                                </div>
+                                <!-- <input type="submit"> -->
+                            </form>
 
                             <!-- <form autocomplete="off" action="/action_page.php">
                                 <div class="autocomplete" style="width:300px;">
@@ -69,7 +71,7 @@
         </nav>
     </div>
     <div class="container" id="info">
-        <p> Favorite List</p>
+    
         <table class="table table is-fullwidth">
             <thead id="table">
                 <tr>
@@ -77,6 +79,7 @@
                     <th scope="col">Company Name</th>
                     <th scope="col">Stock Price</th>
                     <th scope="col">Market Cap</th>
+                    <th scope="col">Remove</th>
                 </tr>
 
             </thead>
@@ -102,11 +105,11 @@
 
 
     <div class="container">
-        <div class="tabs is-boxed">
-            <ul>
-                <li class="is-active" id="info_tab">
+        <div class="tabs is-boxed is-hovered">
+            <ul class="is-hovered">
+                <li class="is-active " id="info_tab">
                     <a>
-                        <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span>
+                        <span class="icon is-small "><i class="fas fa-image" aria-hidden="true"></i></span>
                         <span id="stockinfo">Stock Detail</span>
                     </a>
 
@@ -117,7 +120,7 @@
 
                 <li id="news_tab">
                     <a>
-                        <span class="icon is-small"><i class="fas fa-film" aria-hidden="true"></i></span>
+                        <span class="icon is-small "><i class="fas fa-film" aria-hidden="true"></i></span>
                         <span id="newsfeed">News Feed</span>
                     </a>
                 </li>
