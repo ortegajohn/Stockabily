@@ -13,10 +13,6 @@ var company;
 var tickers_already_used = [];
 var rotate_price_api = 0;
 var rotate_name_api = 0;
-// var column_symbol = $("<th>")
-// var column_company = $("<th>")
-// var column_price = $("<th>")
-// var column_market = $("<th>")
 
 var html_col_values = {
   column_symbol: $("<th>"),
@@ -47,27 +43,6 @@ firebase.initializeApp(config);
 var database = firebase.database();
 var pricedb = firebase.database().ref("stock");
 
-
-///https://www.tradingview.com/widget/advanced-chart/
-//Set chart
-// new TradingView.widget(
-//   {
-//   "width": 980,
-//   "height": 610,
-//   "symbol": "NASDAQ:AAPL",
-//   "interval": "D",
-//   "timezone": "Etc/UTC",
-//   "theme": "Light",
-//   "style": "1",
-//   "locale": "en",
-//   "toolbar_bg": "#f1f3f6",
-//   "enable_publishing": false,
-//   "allow_symbol_change": true,
-//   "container_id": "tradingview_72e3c"
-// }
-// );
-
-// $(".tradingview-widget-container").hide()
 
 function get_index(ticker) {
 
@@ -107,20 +82,7 @@ function update_chart(ticker) {
   // $("#web_chart").attr("href","https://www.tradingview.com/symbols/NYSE-MMM/")
   // TradingView.widget["symbol"] = "NYSE:​MMM"
   new TradingView.widget(
-    //   {
-    //   "width": 980,
-    //   "height": 610,
-    //   "symbol": "NYSE:​MMM",
-    //   "interval": "D",
-    //   "timezone": "Etc/UTC",
-    //   "theme": "Light",
-    //   "style": "1",
-    //   "locale": "en",
-    //   "toolbar_bg": "#f1f3f6",
-    //   "enable_publishing": false,
-    //   "allow_symbol_change": true,
-    //   "container_id": "tradingview_72e3c"
-    // }
+
     {
       "width": 880,
       "height": 510,
@@ -143,13 +105,15 @@ function update_chart(ticker) {
 
 
 function table(ticker) {
-  // var symbol_table = $(`"<tr id='${ticker}_row' class='hover1'>"`)
+
   var symbol_table = $("<tr  class='hover1'>")
 
   symbol_table.append(`<th id="${ticker}_symbol" class= "symbol" scope="col"></th>`)
   symbol_table.append(`<th id="${ticker}_company" class= "company" scope="col"></th>`)
   symbol_table.append(`<th id="${ticker}_price" class= "price" scope="col"></th>`)
   symbol_table.append(`<th id="${ticker}_market" class= "market" scope="col"></th>`)
+  symbol_table.append(`<button ticker="${ticker}" class="buttons" id="${ticker}_deletebtn">delete</button>`)
+
 
 
   $("#table_content").append(symbol_table)
@@ -358,16 +322,8 @@ function get_ticker_info(ticker) {
   }).then(function (response) {
     // console.log("response: ",response)
 
-    // for (i in response["Time Series (Daily)"]) {
-    //   time_series.push(i)
-    // }
-    // y = time_series[0].replace(/^\s+/, "")
-
-    // price = response["Time Series (Daily)"][y]["1. open"]
     price = response["Global Quote"]["05. price"]
-    // console.log(".then_price: ",price);
-    // set_price(price)
-    // console.log("price: ", price)
+
     $("#" + ticker + "_price").text(price)
 
     var pricedb1 = firebase.database().ref(ticker);
@@ -521,13 +477,6 @@ function stockinfo(symbol) {
     low.append(p4)
     close.append(p5)
     volume.append(p6)
-    // $("#stockcontent").empty();
-    // $("#stockcontent").append(symbolName)
-    // $("#stockcontent").append(open)
-    // $("#stockcontent").append(high)
-    // $("#stockcontent").append(low)
-    // $("#stockcontent").append(close)
-    // $("#stockcontent").append(volume)
 
 
     $("#stockinfo_id").empty();
@@ -541,13 +490,7 @@ function stockinfo(symbol) {
 };
 
 
-/*$(document).on("click","#stockdetails", function(e) {
-  var symbol = $(".input").val()
-  event.preventDefault();
-  stockinfo(symbol);
-  
-})
-*/
+
 
 
 
@@ -632,34 +575,37 @@ $(document).on("click", ".symbol", function (e) {
   var x = $(this)["0"];
   var y = $(this)["0"];
   console.log("y: ", y)
-  // var aa = x.toString();
-  // var aa = x.toString();
+
   var ticker_of_row = x.textContent;
-  // var bb = $.parseHTML( x )
-  // console.log("AAAAAAA: ",$(this)["0"])
-  // console.log("BBBBBBB: ",x.textContent)
-  $('.symbol').removeAttr('style'); // removes the backgound for the selected ticker that was darkened 
+
   $(this).css('background-color', 'grey');
   update_chart(ticker_of_row)
   newsfeed(ticker_of_row)
   stockinfo(ticker_of_row)
 
-  // console.log("x: ",JSON.stringify(x))
-  // console.log("bb: ",bb)
-  // for (i=0;i<toString(x).length;i++){
-  //   console.log("i: ",i)
-  // }
 
-  // $(this)["0"].foreach(function(element) {
-  //   console.log("element: ",element);
-  //     });
 });
 
-// $(document).on("click", "#newsfeed", function () {
 
-//   var symbol = $(".input").val();
-//   //$("#stockcontent").empty();
-//   newsfeed(symbol);
+
+$(document).on("click", ".buttons", function (e) {
+// console.log("e",e.originalEvent.path)
+console.log("e",e)
+console.log("e",e.target.outerHTML)
+var x = e.target.outerHTML
+
+console.log("e",e.target.id)
+
+
+
+$(this).closest('tr').remove()
+tickers_already_used = []
+// for( var i = 0; i < tickers_already_used.length; i++){ 
+//   if ( tickers_already_used[i] === 5) {
+//     tickers_already_used.splice(i, 1); 
+//   }
+// }
+});
 
 
 // });
@@ -761,17 +707,13 @@ function autocomplete(inp, arr) {
   });
 }
 
-/*An array containing all the country names in the world:*/
-// var countries1 = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua & Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia & Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Cayman Islands","Central Arfrican Republic","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cuba","Curacao","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Namibia","Nauro","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","North Korea","Norway","Oman","Pakistan","Palau","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre & Miquelon","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","St Kitts & Nevis","St Lucia","St Vincent","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Turks & Caicos","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
 
 
 
 var tickers11 = [];
 var names = [];
 var tickers_names = [];
-// for(i=0;i<AMEX_tickers.length;i++){
-//   tickers11[i] = AMEX_tickers[i];
-// }
+
 
 tickers11 = tickers11.concat(AMEX_tickers);
 tickers11 = tickers11.concat(NASDAQ_tickers);
@@ -781,27 +723,11 @@ names = names.concat(AMEX_names);
 names = names.concat(NASDAQ_names);
 names = names.concat(NYSE_names);
 
-// for(k=0;k<AMEX_tickers.length;k++){
-//   tickers11[k] = AMEX_tickers[k] ;
-// }
-
-// for(l=0;l<AMEX_tickers.length;l++){
-//   names[l] = AMEX_names[l]; 
-// }
 
 for(j=0;j<tickers11.length;j++){
   tickers_names[j] = tickers11[j] +" " +names[j];
 }
 
-
-// for(j=0;j<NASDAQ_tickers.length;j++){
-//   tickers11[AMEX_tickers.length+1+j]=NASDAQ_tickers[j];
-//   // console.log("tickers11[AMEX_tickers.length+1+j]=NASDAQ_tickers[j]: ",tickers11)
-// }
-
-// for(k=0;k<NYSE_tickers.length;k++){
-//   tickers11.push(k);
-// }
 
 
 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
