@@ -324,7 +324,7 @@ function get_ticker_info(ticker) {
 
     price = response["Global Quote"]["05. price"]
     var two_dec_format = sting_to_float(price)
-    $("#" + ticker + "_price").text(price)
+    $("#" + ticker + "_price").text(two_dec_format)
 
     var pricedb1 = firebase.database().ref(ticker);
     pricedb1.update({
