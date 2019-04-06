@@ -112,7 +112,7 @@ function table(ticker) {
   symbol_table.append(`<th id="${ticker}_company" class= "company" scope="col"></th>`)
   symbol_table.append(`<th id="${ticker}_price" class= "price" scope="col"></th>`)
   symbol_table.append(`<th id="${ticker}_market" class= "market" scope="col"></th>`)
-  symbol_table.append(`<button ticker="${ticker}" class="buttons" id="${ticker}_deletebtn">delete</button>`)
+  symbol_table.append(`<th class="del_button" scope="col"> <button ticker="${ticker}" class="buttons" id="${ticker}_deletebtn">delete</button></th>`)
 
 
 
@@ -323,12 +323,12 @@ function get_ticker_info(ticker) {
     // console.log("response: ",response)
 
     price = response["Global Quote"]["05. price"]
-
+    var two_dec_format = sting_to_float(price)
     $("#" + ticker + "_price").text(price)
 
     var pricedb1 = firebase.database().ref(ticker);
     pricedb1.update({
-      pricedb: price
+      pricedb: two_dec_format
 
     });
     // console.log("fb_price "+ticker +": "+get_fb_price(ticker) )
@@ -339,7 +339,11 @@ function get_ticker_info(ticker) {
 
 }
 
-
+function sting_to_float(x){
+  var r = parseFloat(x)
+  var aq = r.toFixed(2)
+  return "$"+aq
+}
 
 //news 
 //https://api.iextrading.com/1.0/stock/aapl/batch?types=quote,news,chart&range=1m&last=10
@@ -353,14 +357,15 @@ function iex_price(ticker) {
     method: "GET"
   }).then(function (response) {
     var iex_p = response.quote.latestPrice
+    var two_dec_format = sting_to_float(iex_p)
     // console.log("iex: ",response.quote.latestPrice)
-    $("#" + ticker + "_price").text(iex_p)
+    $("#" + ticker + "_price").text(two_dec_format)
     var pricedb1 = firebase.database().ref(ticker);
     pricedb1.update({
       pricedb: iex_p
 
     });
-    $("#" + ticker + "_price").text(get_fb_price(ticker))
+    $("#" + ticker + "_price").text(get_fb_price(ticker).toFixed(2))
   });
 };
 
@@ -374,14 +379,15 @@ function worldtradingdata_price(ticker) {
     method: "GET"
   }).then(function (response) {
     var worldtradingdata = response.data[0].price
+    var two_dec_format = sting_to_float(worldtradingdata)
     console.log("intrinio: ", response.data[0].price)
-    $("#" + ticker + "_price").text(worldtradingdata)
+    $("#" + ticker + "_price").text(two_dec_format)
     var pricedb1 = firebase.database().ref(ticker);
     pricedb1.update({
-      pricedb: worldtradingdata
+      pricedb: two_dec_format
 
     });
-    $("#" + ticker + "_price").text(get_fb_price(ticker))
+    $("#" + ticker + "_price").text(get_fb_price(ticker).toFixed(2))
   });
 };
 
@@ -398,14 +404,15 @@ function unibit_price(ticker) {
     method: "GET"
   }).then(function (response) {
     var unibit_price = response[0].price
+    var two_dec_format = sting_to_float(unibit_price)
     console.log("unibit_price: ", response[0].price)
-    $("#" + ticker + "_price").text(response[0].price)
+    $("#" + ticker + "_price").text(two_dec_format)
     var pricedb1 = firebase.database().ref(ticker);
     pricedb1.update({
-      pricedb: unibit_price
+      pricedb: two_dec_format
 
     });
-    $("#" + ticker + "_price").text(get_fb_price(ticker))
+    $("#" + ticker + "_price").text(get_fb_price(ticker).toFixed(2))
   });
 };
 
@@ -572,6 +579,7 @@ $(document).on("click", "#info_tab", function (e) {
 
 
 $(document).on("click", ".symbol", function (e) {
+  $('.symbol').removeAttr('style'); // removes the backgound for the selected ticker that was darkened 
   var x = $(this)["0"];
   var y = $(this)["0"];
   console.log("y: ", y)
@@ -591,20 +599,20 @@ $(document).on("click", ".symbol", function (e) {
 $(document).on("click", ".buttons", function (e) {
 // console.log("e",e.originalEvent.path)
 console.log("e",e)
-console.log("e",e.target.outerHTML)
-var x = e.target.outerHTML
-
 console.log("e",e.target.id)
-
+var x = e.target.id
+var y = x.split("_",1)
+var z = y.join();
+console.log("z: ",z)
 
 
 $(this).closest('tr').remove()
-tickers_already_used = []
-// for( var i = 0; i < tickers_already_used.length; i++){ 
-//   if ( tickers_already_used[i] === 5) {
-//     tickers_already_used.splice(i, 1); 
-//   }
-// }
+// tickers_already_used = []
+for( var i = 0; i < tickers_already_used.length; i++){ 
+  if ( tickers_already_used[i] === z) {
+    tickers_already_used.splice(i, 1); 
+  }
+}
 });
 
 
